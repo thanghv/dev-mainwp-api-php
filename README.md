@@ -2,14 +2,29 @@
 
 A PHP wrapper for the MainWP REST API. Easily interact with the MainWP REST API securely using this library. If using a HTTPS connection this library uses BasicAuth, else it uses Oauth to provide a secure connection to MainWP.
 
-[![CI status](https://github.com/mainwp/mainwp-api-php/actions/workflows/ci.yml/badge.svg?branch=trunk)](https://github.com/mainwp/mainwp-api-php/actions/workflows/ci.yml)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mainwp/mainwp-api-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mainwp/mainwp-api-php/?branch=master)
-[![PHP version](https://badge.fury.io/ph/mainwp%2Fmainwp.svg)](https://packagist.org/packages/mainwp/mainwp)
+[![CI status](https://github.com/thanghv/dev-mainwp-api-php/actions/workflows/ci.yml/badge.svg?branch=trunk)](https://github.com/thanghv/dev-mainwp-api-php/actions/workflows/ci.yml)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thanghv/dev-mainwp-api-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/thanghv/dev-mainwp-api-php/?branch=master)
+[![PHP version](https://badge.fury.io/ph/mainwp%2Fmainwp.svg)](https://packagist.org/packages/thanghv/dev-mainwp-api-php)
 
 ## Installation
 
 ```
-composer require mainwp/mainwp
+{
+  "repositories": [
+      {
+          "type": "vcs",
+          "url": "https://github.com/thanghv/dev-mainwp-api-php.git"
+      }
+  ],
+  "require": {
+      "thanghv/dev-mainwp-api-php": "dev-main"
+  }
+}
+
+```
+
+```
+composer require thanghv/dev-mainwp-api-php
 ```
 
 ## Getting started
@@ -153,4 +168,4 @@ try {
 
 ## Release History
 
-- 2016-01-11 - 1.0.0 - Stable release.
+- 2025-2-6 - 1.0.1 - Stable release.
