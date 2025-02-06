@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MainWP Dashboard REST API HTTP Client Request
+ * MainWP REST API HTTP Client Request
  *
  * @category HttpClient
  * @package  MainWP/Dashboard
@@ -14,174 +14,162 @@ namespace MainWP\Dashboard\HttpClient;
  *
  * @package MainWP/Dashboard
  */
-class Request
-{
-    /**
-     * Request url.
-     *
-     * @var string
-     */
-    private $url;
+class Request {
 
-    /**
-     * Request method.
-     *
-     * @var string
-     */
-    private $method;
+	/**
+	 * Request url.
+	 *
+	 * @var string
+	 */
+	private $url;
 
-    /**
-     * Request paramenters.
-     *
-     * @var array
-     */
-    private $parameters;
+	/**
+	 * Request method.
+	 *
+	 * @var string
+	 */
+	private $method;
 
-    /**
-     * Request headers.
-     *
-     * @var array
-     */
-    private $headers;
+	/**
+	 * Request paramenters.
+	 *
+	 * @var array
+	 */
+	private $parameters;
 
-    /**
-     * Request body.
-     *
-     * @var string
-     */
-    private $body;
+	/**
+	 * Request headers.
+	 *
+	 * @var array
+	 */
+	private $headers;
 
-    /**
-     * Initialize request.
-     *
-     * @param string $url        Request url.
-     * @param string $method     Request method.
-     * @param array  $parameters Request paramenters.
-     * @param array  $headers    Request headers.
-     * @param string $body       Request body.
-     */
-    public function __construct($url = '', $method = 'POST', $parameters = [], $headers = [], $body = '')
-    {
-        $this->url        = $url;
-        $this->method     = $method;
-        $this->parameters = $parameters;
-        $this->headers    = $headers;
-        $this->body       = $body;
-    }
+	/**
+	 * Request body.
+	 *
+	 * @var string
+	 */
+	private $body;
 
-    /**
-     * Set url.
-     *
-     * @param string $url Request url.
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
+	/**
+	 * Initialize request.
+	 *
+	 * @param string $url        Request url.
+	 * @param string $method     Request method.
+	 * @param array  $parameters Request paramenters.
+	 * @param array  $headers    Request headers.
+	 * @param string $body       Request body.
+	 */
+	public function __construct( $url = '', $method = 'POST', $parameters = array(), $headers = array(), $body = '' ) {
+		$this->url        = $url;
+		$this->method     = $method;
+		$this->parameters = $parameters;
+		$this->headers    = $headers;
+		$this->body       = $body;
+	}
 
-    /**
-     * Set method.
-     *
-     * @param string $method Request method.
-     */
-    public function setMethod($method)
-    {
-        $this->method = $method;
-    }
+	/**
+	 * Set url.
+	 *
+	 * @param string $url Request url.
+	 */
+	public function setUrl( $url ) {
+		$this->url = $url;
+	}
 
-    /**
-     * Set parameters.
-     *
-     * @param array $parameters Request paramenters.
-     */
-    public function setParameters($parameters)
-    {
-        $this->parameters = $parameters;
-    }
+	/**
+	 * Set method.
+	 *
+	 * @param string $method Request method.
+	 */
+	public function setMethod( $method ) {
+		$this->method = $method;
+	}
 
-    /**
-     * Set headers.
-     *
-     * @param array $headers Request headers.
-     */
-    public function setHeaders($headers)
-    {
-        $this->headers = $headers;
-    }
+	/**
+	 * Set parameters.
+	 *
+	 * @param array $parameters Request paramenters.
+	 */
+	public function setParameters( $parameters ) {
+		$this->parameters = $parameters;
+	}
 
-    /**
-     * Set body.
-     *
-     * @param string $body Request body.
-     */
-    public function setBody($body)
-    {
-        $this->body = $body;
-    }
+	/**
+	 * Set headers.
+	 *
+	 * @param array $headers Request headers.
+	 */
+	public function setHeaders( $headers ) {
+		$this->headers = $headers;
+	}
 
-    /**
-     * Get url.
-     *
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
+	/**
+	 * Set body.
+	 *
+	 * @param string $body Request body.
+	 */
+	public function setBody( $body ) {
+		$this->body = $body;
+	}
 
-    /**
-     * Get method.
-     *
-     * @return string
-     */
-    public function getMethod()
-    {
-        return $this->method;
-    }
+	/**
+	 * Get url.
+	 *
+	 * @return string
+	 */
+	public function getUrl() {
+		return $this->url;
+	}
 
-    /**
-     * Get parameters.
-     *
-     * @return array
-     */
-    public function getParameters()
-    {
-        return $this->parameters;
-    }
+	/**
+	 * Get method.
+	 *
+	 * @return string
+	 */
+	public function getMethod() {
+		return $this->method;
+	}
 
-    /**
-     * Get headers.
-     *
-     * @return array
-     */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
+	/**
+	 * Get parameters.
+	 *
+	 * @return array
+	 */
+	public function getParameters() {
+		return $this->parameters;
+	}
 
-    /**
-     * Get raw headers.
-     *
-     * @return array
-     */
-    public function getRawHeaders()
-    {
-        $headers = [];
+	/**
+	 * Get headers.
+	 *
+	 * @return array
+	 */
+	public function getHeaders() {
+		return $this->headers;
+	}
 
-        foreach ($this->headers as $key => $value) {
-            $headers[] = $key . ': ' . $value;
-        }
+	/**
+	 * Get raw headers.
+	 *
+	 * @return array
+	 */
+	public function getRawHeaders() {
+		$headers = array();
 
-        return $headers;
-    }
+		foreach ( $this->headers as $key => $value ) {
+			$headers[] = $key . ': ' . $value;
+		}
 
-    /**
-     * Get body.
-     *
-     * @return string
-     */
-    public function getBody()
-    {
-        return $this->body;
-    }
+		return $headers;
+	}
+
+	/**
+	 * Get body.
+	 *
+	 * @return string
+	 */
+	public function getBody() {
+		return $this->body;
+	}
 }

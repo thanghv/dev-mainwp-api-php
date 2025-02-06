@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MainWP MainWP Dashboard REST API HTTP Client Exception
+ * MainWP MainWP REST API HTTP Client Exception
  *
  * @category HttpClient
  * @package  MainWP/Dashboard
@@ -17,55 +17,52 @@ use MainWP\Dashboard\HttpClient\Response;
  *
  * @package MainWP/Dashboard
  */
-class HttpClientException extends \Exception
-{
-    /**
-     * Request.
-     *
-     * @var Request
-     */
-    private $request;
+class HttpClientException extends \Exception {
 
-    /**
-     * Response.
-     *
-     * @var Response
-     */
-    private $response;
+	/**
+	 * Request.
+	 *
+	 * @var Request
+	 */
+	private $request;
 
-    /**
-     * Initialize exception.
-     *
-     * @param string   $message  Error message.
-     * @param int      $code     Error code.
-     * @param Request  $request  Request data.
-     * @param Response $response Response data.
-     */
-    public function __construct($message, $code, Request $request, Response $response)
-    {
-        parent::__construct($message, $code);
+	/**
+	 * Response.
+	 *
+	 * @var Response
+	 */
+	private $response;
 
-        $this->request  = $request;
-        $this->response = $response;
-    }
+	/**
+	 * Initialize exception.
+	 *
+	 * @param string   $message  Error message.
+	 * @param int      $code     Error code.
+	 * @param Request  $request  Request data.
+	 * @param Response $response Response data.
+	 */
+	public function __construct( $message, $code, Request $request, Response $response ) {
+		parent::__construct( $message, $code );
 
-    /**
-     * Get request data.
-     *
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
+		$this->request  = $request;
+		$this->response = $response;
+	}
 
-    /**
-     * Get response data.
-     *
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
-    }
+	/**
+	 * Get request data.
+	 *
+	 * @return Request
+	 */
+	public function getRequest() {
+		return $this->request;
+	}
+
+	/**
+	 * Get response data.
+	 *
+	 * @return Response
+	 */
+	public function getResponse() {
+		return $this->response;
+	}
 }

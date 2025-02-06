@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MainWP Dashboard REST API HTTP Client Options
+ * MainWP REST API HTTP Client Options
  *
  * @category HttpClient
  * @package  MainWP/Dashboard
@@ -17,11 +17,11 @@ namespace MainWP\Dashboard\HttpClient;
 class Options
 {
     /**
-     * Default MainWP Dashboard REST API version.
+     * Default MainWP REST API version.
      *
      * @var string
      */
-    public const VERSION = 'wc/v3';
+    public const VERSION = 'v2';
 
     /**
      * Default request timeout.
@@ -38,7 +38,7 @@ class Options
      * Default User Agent.
      * No version number.
      */
-    public const USER_AGENT = 'Dashboard API Client-PHP';
+    public const USER_AGENT = 'MainWP Dashboard API Client-PHP';
 
     /**
      * Options.

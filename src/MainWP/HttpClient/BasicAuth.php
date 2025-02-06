@@ -14,83 +14,80 @@ namespace MainWP\Dashboard\HttpClient;
  *
  * @package MainWP/Dashboard
  */
-class BasicAuth
-{
-    /**
-     * cURL handle.
-     *
-     * @var resource
-     */
-    protected $ch;
+class BasicAuth {
 
-    /**
-     * Consumer key.
-     *
-     * @var string
-     */
-    protected $consumerKey;
+	/**
+	 * cURL handle.
+	 *
+	 * @var resource
+	 */
+	protected $ch;
 
-    /**
-     * Consumer secret.
-     *
-     * @var string
-     */
-    protected $consumerSecret;
+	/**
+	 * Consumer key.
+	 *
+	 * @var string
+	 */
+	protected $consumerKey;
 
-    /**
-     * Do query string auth.
-     *
-     * @var bool
-     */
-    protected $doQueryString;
+	/**
+	 * Consumer secret.
+	 *
+	 * @var string
+	 */
+	protected $consumerSecret;
 
-    /**
-     * Request parameters.
-     *
-     * @var array
-     */
-    protected $parameters;
+	/**
+	 * Do query string auth.
+	 *
+	 * @var bool
+	 */
+	protected $doQueryString;
 
-    /**
-     * Initialize Basic Authentication class.
-     *
-     * @param resource $ch             cURL handle.
-     * @param string   $consumerKey    Consumer key.
-     * @param string   $consumerSecret Consumer Secret.
-     * @param bool     $doQueryString  Do or not query string auth.
-     * @param array    $parameters     Request parameters.
-     */
-    public function __construct($ch, $consumerKey, $consumerSecret, $doQueryString, $parameters = [])
-    {
-        $this->ch             = $ch;
-        $this->consumerKey    = $consumerKey;
-        $this->consumerSecret = $consumerSecret;
-        $this->doQueryString  = $doQueryString;
-        $this->parameters     = $parameters;
+	/**
+	 * Request parameters.
+	 *
+	 * @var array
+	 */
+	protected $parameters;
 
-        $this->processAuth();
-    }
+	/**
+	 * Initialize Basic Authentication class.
+	 *
+	 * @param resource $ch             cURL handle.
+	 * @param string   $consumerKey    Consumer key.
+	 * @param string   $consumerSecret Consumer Secret.
+	 * @param bool     $doQueryString  Do or not query string auth.
+	 * @param array    $parameters     Request parameters.
+	 */
+	public function __construct( $ch, $consumerKey, $consumerSecret, $doQueryString, $parameters = array() ) {
+		$this->ch             = $ch;
+		$this->consumerKey    = $consumerKey;
+		$this->consumerSecret = $consumerSecret;
+		$this->doQueryString  = $doQueryString;
+		$this->parameters     = $parameters;
 
-    /**
-     * Process auth.
-     */
-    protected function processAuth()
-    {
-        if ($this->doQueryString) {
-            $this->parameters['consumer_key']    = $this->consumerKey;
-            $this->parameters['consumer_secret'] = $this->consumerSecret;
-        } else {
-            \curl_setopt($this->ch, CURLOPT_USERPWD, $this->consumerKey . ':' . $this->consumerSecret);
-        }
-    }
+		$this->processAuth();
+	}
 
-    /**
-     * Get parameters.
-     *
-     * @return array
-     */
-    public function getParameters()
-    {
-        return $this->parameters;
-    }
+	/**
+	 * Process auth.
+	 */
+	protected function processAuth() {
+		if ( $this->doQueryString ) {
+			$this->parameters['consumer_key']    = $this->consumerKey;
+			$this->parameters['consumer_secret'] = $this->consumerSecret;
+		} else {
+			\curl_setopt( $this->ch, CURLOPT_USERPWD, $this->consumerKey . ':' . $this->consumerSecret );
+		}
+	}
+
+	/**
+	 * Get parameters.
+	 *
+	 * @return array
+	 */
+	public function getParameters() {
+		return $this->parameters;
+	}
 }
