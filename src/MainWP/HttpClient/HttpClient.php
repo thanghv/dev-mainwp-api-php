@@ -39,6 +39,13 @@ class HttpClient {
 	protected $url;
 
 	/**
+	 * Consumer Api Key.
+	 *
+	 * @var string
+	 */
+	protected $consumerApiKey;
+
+	/**
 	 * Consumer key.
 	 *
 	 * @var string
@@ -91,19 +98,20 @@ class HttpClient {
 	 * Initialize HTTP client.
 	 *
 	 * @param string $url            Store URL.
-	 * @param string $consumerKey    Consumer key.
-	 * @param string $consumerSecret Consumer Secret.
-	 * @param array  $options        Client options.
+	 * @param string $consumerApiKey API key (Bearer token).
+	 * @param array  $options        Options (version, timeout, verify_ssl, auth_method).
 	 */
-	public function __construct( $url, $consumerKey, $consumerSecret, $options ) {
+	public function __construct( $url, $consumerApiKey = '', $options = array() ) {
 		if ( ! \function_exists( 'curl_version' ) ) {
 			throw new HttpClientException( 'cURL is NOT installed on this server', -1, new Request(), new Response() );
 		}
 
-		$this->options        = new Options( $options );
-		$this->url            = $this->buildApiUrl( $url );
-		$this->consumerKey    = $consumerKey;
-		$this->consumerSecret = $consumerSecret;
+		$this->options = new Options( $options );
+		$this->url     = $this->buildApiUrl( $url );
+
+		$this->consumerApiKey = ! empty( $consumerApiKey ) ? $consumerApiKey : '';
+		$this->consumerKey    = ! empty( $options['consumer_key'] ) ? $options['consumer_key'] : '';
+		$this->consumerSecret = ! empty( $options['consumer_secret'] ) ? $options['consumer_secret'] : '';
 	}
 
 	/**
@@ -123,7 +131,7 @@ class HttpClient {
 	 * @return string
 	 */
 	protected function buildApiUrl( $url ) {
-		$api = $this->options->isWPAPI() ? $this->options->apiPrefix() : '/mainwp/';
+		$api = $this->options->apiPrefix() . '/mainwp/';
 		return \rtrim( $url, '/' ) . $api . $this->options->getVersion() . '/' . $this->options->apiForExtension();
 	}
 
@@ -158,7 +166,9 @@ class HttpClient {
 	 */
 	protected function authenticate( $url, $method, $parameters = array() ) {
 		// Setup authentication.
-		if ( ! $this->options->isOAuthOnly() && $this->isSsl() ) {
+		if ( 'bearer' === $this->options->getAuthMethod() ) {
+			return $parameters;
+		} elseif ( 'basic' === $this->options->isOAuthOnly() && $this->isSsl() ) {
 			$basicAuth  = new BasicAuth(
 				$this->ch,
 				$this->consumerKey,
@@ -232,14 +242,14 @@ class HttpClient {
 		$hasData = ! empty( $data );
 		$headers = $this->getRequestHeaders( $hasData );
 
+		if ( 'bearer' === $this->options->getAuthMethod() ) {
+			$headers['Authorization'] = 'Bearer ' . $this->options->consumerApiKey;
+		}
+
 		// HTTP method override feature which masks PUT and DELETE HTTP methods as POST method with added
-		// ?_method=PUT query parameter and/or X-HTTP-Method-Override HTTP header.
+		// X-HTTP-Method-Override HTTP header.
 		if ( ! in_array( $method, array( 'GET', 'POST' ) ) ) {
 			$usePostMethod = false;
-			if ( $this->options->isMethodOverrideQuery() ) {
-				$parameters    = array_merge( array( '_method' => $method ), $parameters );
-				$usePostMethod = true;
-			}
 			if ( $this->options->isMethodOverrideHeader() ) {
 				$headers['X-HTTP-Method-Override'] = $method;
 				$usePostMethod                     = true;

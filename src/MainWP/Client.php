@@ -34,15 +34,11 @@ class Client {
 	 * Initialize client.
 	 *
 	 * @param string $url            Store URL.
-	 * @param array  $options        Options (version, timeout, verify_ssl, oauth_only).
 	 * @param string $consumerApiKey API key (Bearer token).
+	 * @param array  $options        Options (version, timeout, verify_ssl, auth_method).
 	 */
-	public function __construct( $url, $options = array(), $consumerApiKey = '' ) {
-		if ( empty( $consumerApiKey ) && ( ! empty( $options['consumerKey'] ) && ! empty( $options['consumerSecret'] ) ) ) {
-			$this->http = new HttpClient( $url, $options['consumerKey'], $options['consumerSecret'], $options );
-		} else {
-			$this->http = new HttpClient( $url, $consumerApiKey, $options );
-		}
+	public function __construct( $url, $consumerApiKey = '', $options = array() ) {
+		$this->http = new HttpClient( $url, $options, $consumerApiKey );
 	}
 
 	/**

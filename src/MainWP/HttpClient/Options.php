@@ -75,12 +75,15 @@ class Options {
 	}
 
 	/**
-	 * Only use OAuth.
+	 * Get auth method.
 	 *
-	 * @return bool
+	 * @return string
 	 */
-	public function isOAuthOnly() {
-		return isset( $this->options['oauth_only'] ) ? (bool) $this->options['oauth_only'] : false;
+	public function getAuthMethod() {
+		if ( ! empty( $this->options['auth_method'] ) && in_array( $this->options['auth_method'], array( 'oauth', 'basic' ) ) ) {
+			return $this->options['auth_method'];
+		}
+		return 'bearer';
 	}
 
 	/**
@@ -103,21 +106,12 @@ class Options {
 	}
 
 	/**
-	 * Check if is WP REST API.
-	 *
-	 * @return bool
-	 */
-	public function isWPAPI() {
-		return isset( $this->options['wp_api'] ) ? (bool) $this->options['wp_api'] : true;
-	}
-
-	/**
 	 * Custom API Prefix for WP API.
 	 *
 	 * @return string
 	 */
 	public function apiPrefix() {
-		return isset( $this->options['wp_api_prefix'] ) ? $this->options['wp_api_prefix'] : self::WP_API_PREFIX;
+		return self::WP_API_PREFIX;
 	}
 
 	/**
@@ -159,16 +153,6 @@ class Options {
 	 */
 	public function getFollowRedirects() {
 		return isset( $this->options['follow_redirects'] ) ? (bool) $this->options['follow_redirects'] : false;
-	}
-
-	/**
-	 * Check is it needed to mask all non-GET/POST methods (PUT/DELETE/etc.) by using POST method with added
-	 * query parameter ?_method=METHOD into URL.
-	 *
-	 * @return bool
-	 */
-	public function isMethodOverrideQuery() {
-		return isset( $this->options['method_override_query'] ) && $this->options['method_override_query'];
 	}
 
 	/**

@@ -47,20 +47,21 @@ use MainWP\Dashboard\Client;
 
 $mainwp = new Client(
   'http://example.com',
+  'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
   [
     'version' => 'v2',
   ],
-  'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
 );
 
 or
 
 $mainwp = new Client(
   'http://example.com',
+  false,
   [
     'version' => 'v2',
-	'ck_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-	'cs_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'version' => 'ck_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'version' => 'cs_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
   ]
 );
 
@@ -69,36 +70,41 @@ $mainwp = new Client(
 ## Client class
 
 ```php
-$mainwp = new Client($url, $consumer_key, $consumer_secret, $options);
+$mainwp = new Client($url, $options, $consumer_apikey );
+
+or
+
+$options['consumer_key'] = $consumer_key;
+$options['consumer_secret'] = $consumer_secret;
+
+$mainwp = new Client($url, $options );
+
 ```
 
 ### Options
 
-| Option             | Type     | Required | Description                                |
-| ------------------ | -------- | -------- | ------------------------------------------ |
+| Option             | Type     | Required | Description                                        |
+| ------------------ | -------- | -------- | -------------------------------------------------- |
 | `url`              | `string` | yes      | Your Store URL, example: http://mydashboard.dev/   |
-| `consumer_api_key` | `string` | yes      | Your API consumer Bearer token key                      |
-| `options`          | `array`  | no       | Extra arguments (see client options table) |
+| `consumer_apikey`  | `string` | no	   | Your API consumer Bearer token key                 |
+| `options`          | `array`  | no       | Extra arguments (see client options table)         |
 
 #### Client options
 
 | Option                   | Type     | Required | Description                                                                                                                                            |
 | ------------------------ | -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `version`                | `string` | no       | API version, default is `v2`                                                                                                                        |
+| `version`                | `string` | no       | API version, default is `v2`                                                                                                                           |
 | `timeout`                | `int`    | no       | Request timeout, default is `15`                                                                                                                       |
 | `verify_ssl`             | `bool`   | no       | Verify SSL when connect, use this option as `false` when need to test with self-signed certificates, default is `true`                                 |
-| `consumer_key`    	   | `string` | yes      | Your API consumer key                      |
-| `consumer_secret` 	   | `string` | yes      | Your API consumer secret                   |
+| `auth_method`            | `string  | no       | Use Bearer Token `bearer`, oAuth `oauth`, or Basic 'basic' auth for requests, default is `bearer`                                                      |                    |
+| `consumer_key`    	   | `string` | no    	 | Your API consumer key                      																											  |
+| `consumer_secret` 	   | `string` | no   	 | Your API consumer secret                   																											  |
 | `follow_redirects`       | `bool`   | no       | Allow the API call to follow redirects                                                                                                                 |
 | `query_string_auth`      | `bool`   | no       | Force Basic Authentication as query string when `true` and using under HTTPS, default is `false`                                                       |
 | `oauth_timestamp`        | `string` | no       | Custom oAuth timestamp, default is `time()`                                                                                                            |
-| `oauth_only`             | `bool`   | no       | Only use oauth for requests, it will disable Basic Auth, default is `false`                                                                            |
-| `user_agent`             | `string` | no       | Custom user-agent, default is `MainWP API Client-PHP`                                                                                             |
-| `extension_api`          | `string` | no       | Use for MainWP extensions REST API prefix,                                                      |
-| `wp_api_prefix`          | `string` | no       | Custom WP REST API URL prefix, used to support custom prefixes created with the `rest_url_prefix` filter                                               |
-| `wp_api`                 | `bool`   | no       | Set to `false` in order to use the legacy MainWP REST API (deprecated and not recommended)                                                        |
-| `method_override_query`  | `bool`   | no       | If true will mask all non-GET/POST methods by using POST method with added query parameter `?_method=METHOD` into URL                                  |
+| `user_agent`             | `string` | no       | Custom user-agent, default is `MainWP API Client-PHP`                                                                                                  |
 | `method_override_header` | `bool`   | no       | If true will mask all non-GET/POST methods (PUT/DELETE/etc.) by using POST method with added `X-HTTP-Method-Override: METHOD` HTTP header into request |
+| `extension_api`          | `string` | no       | Use for MainWP extensions REST API prefix,                                                                                                             |
 
 ## Client methods
 
@@ -149,8 +155,7 @@ use MainWP\Dashboard\HttpClient\HttpClientException;
 
 try {
   // Array of response results.
-  $results = $mainwp->get('customers');
-  // Example: ['customers' => [[ 'id' => 8, 'created_at' => '2015-05-06T17:43:51Z', 'email' => ...
+  $results = $mainwp->get('sites');
   echo '<pre><code>' . print_r($results, true) . '</code><pre>'; // JSON output.
 
   // Last request data.
