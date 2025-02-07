@@ -38,7 +38,7 @@ class Client {
 	 * @param array  $options        Options (version, timeout, verify_ssl, auth_method).
 	 */
 	public function __construct( $url, $consumerApiKey = '', $options = array() ) {
-		$this->http = new HttpClient( $url, $options, $consumerApiKey );
+		$this->http = new HttpClient( $url, $consumerApiKey, $options );
 	}
 
 	/**
