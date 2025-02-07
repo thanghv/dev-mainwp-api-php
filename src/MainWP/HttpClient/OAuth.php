@@ -163,7 +163,7 @@ class OAuth {
 		$secret = $this->consumerSecret;
 
 		// Fix secret for v3 or later.
-		if ( ! \in_array( $this->apiVersion, array( 'v1', 'v2' ) ) ) {
+		if ( ! \in_array( $this->apiVersion, array( 'v2' ) ) ) {
 			$secret .= '&';
 		}
 

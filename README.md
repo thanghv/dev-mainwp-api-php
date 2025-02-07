@@ -8,6 +8,8 @@ A PHP wrapper for the MainWP REST API. Easily interact with the MainWP REST API 
 
 ## Installation
 
+Create composer.json as bellow if want to get package from github
+
 ```
 {
   "repositories": [
@@ -36,7 +38,7 @@ Check out the MainWP API endpoints and data that can be manipulated in <https://
 
 ## Setup
 
-Setup for the new WP REST API integration (MainWP 2.6 or later):
+Setup for the new WP REST API integration (MainWP 5.2 or later):
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
@@ -45,12 +47,23 @@ use MainWP\Dashboard\Client;
 
 $mainwp = new Client(
   'http://example.com',
-  'ck_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-  'cs_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
   [
-    'version' => 'wc/v3',
+    'version' => 'v2',
+  ],
+  'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+);
+
+or
+
+$mainwp = new Client(
+  'http://example.com',
+  [
+    'version' => 'v2',
+	'ck_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+	'cs_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
   ]
 );
+
 ```
 
 ## Client class
@@ -61,25 +74,27 @@ $mainwp = new Client($url, $consumer_key, $consumer_secret, $options);
 
 ### Options
 
-| Option            | Type     | Required | Description                                |
-| ----------------- | -------- | -------- | ------------------------------------------ |
-| `url`             | `string` | yes      | Your Store URL, example: http://woo.dev/   |
-| `consumer_key`    | `string` | yes      | Your API consumer key                      |
-| `consumer_secret` | `string` | yes      | Your API consumer secret                   |
-| `options`         | `array`  | no       | Extra arguments (see client options table) |
+| Option             | Type     | Required | Description                                |
+| ------------------ | -------- | -------- | ------------------------------------------ |
+| `url`              | `string` | yes      | Your Store URL, example: http://mydashboard.dev/   |
+| `consumer_api_key` | `string` | yes      | Your API consumer Bearer token key                      |
+| `options`          | `array`  | no       | Extra arguments (see client options table) |
 
 #### Client options
 
 | Option                   | Type     | Required | Description                                                                                                                                            |
 | ------------------------ | -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `version`                | `string` | no       | API version, default is `wc/v3`                                                                                                                        |
+| `version`                | `string` | no       | API version, default is `v2`                                                                                                                        |
 | `timeout`                | `int`    | no       | Request timeout, default is `15`                                                                                                                       |
 | `verify_ssl`             | `bool`   | no       | Verify SSL when connect, use this option as `false` when need to test with self-signed certificates, default is `true`                                 |
+| `consumer_key`    	   | `string` | yes      | Your API consumer key                      |
+| `consumer_secret` 	   | `string` | yes      | Your API consumer secret                   |
 | `follow_redirects`       | `bool`   | no       | Allow the API call to follow redirects                                                                                                                 |
 | `query_string_auth`      | `bool`   | no       | Force Basic Authentication as query string when `true` and using under HTTPS, default is `false`                                                       |
 | `oauth_timestamp`        | `string` | no       | Custom oAuth timestamp, default is `time()`                                                                                                            |
 | `oauth_only`             | `bool`   | no       | Only use oauth for requests, it will disable Basic Auth, default is `false`                                                                            |
 | `user_agent`             | `string` | no       | Custom user-agent, default is `MainWP API Client-PHP`                                                                                             |
+| `extension_api`          | `string` | no       | Use for MainWP extensions REST API prefix,                                                      |
 | `wp_api_prefix`          | `string` | no       | Custom WP REST API URL prefix, used to support custom prefixes created with the `rest_url_prefix` filter                                               |
 | `wp_api`                 | `bool`   | no       | Set to `false` in order to use the legacy MainWP REST API (deprecated and not recommended)                                                        |
 | `method_override_query`  | `bool`   | no       | If true will mask all non-GET/POST methods by using POST method with added query parameter `?_method=METHOD` into URL                                  |
@@ -121,7 +136,7 @@ $mainwp->options($endpoint);
 
 | Params       | Type     | Description                                                  |
 | ------------ | -------- | ------------------------------------------------------------ |
-| `endpoint`   | `string` | MainWP API endpoint, example: `customers` or `order/12` |
+| `endpoint`   | `string` | MainWP API endpoint, example: `sites` or `sites/sync/12` |
 | `data`       | `array`  | Only for POST and PUT, data that will be converted to JSON   |
 | `parameters` | `array`  | Only for GET and DELETE, request query string                |
 
@@ -168,4 +183,4 @@ try {
 
 ## Release History
 
-- 2025-2-6 - 1.0.1 - Stable release.
+- 2025-2-6 - 1.0.0 - Stable release.

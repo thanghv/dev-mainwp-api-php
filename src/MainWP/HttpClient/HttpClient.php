@@ -124,8 +124,7 @@ class HttpClient {
 	 */
 	protected function buildApiUrl( $url ) {
 		$api = $this->options->isWPAPI() ? $this->options->apiPrefix() : '/mainwp/';
-
-		return \rtrim( $url, '/' ) . $api . $this->options->getVersion() . '/';
+		return \rtrim( $url, '/' ) . $api . $this->options->getVersion() . '/' . $this->options->apiForExtension();
 	}
 
 	/**
