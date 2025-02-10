@@ -104,7 +104,7 @@ $mainwp = new Client($url, $options );
 | `oauth_timestamp`        | `string` | no       | Custom oAuth timestamp, default is `time()`                                                                                                            |
 | `user_agent`             | `string` | no       | Custom user-agent, default is `MainWP API Client-PHP`                                                                                                  |
 | `method_override_header` | `bool`   | no       | If true will mask all non-GET/POST methods (PUT/DELETE/etc.) by using POST method with added `X-HTTP-Method-Override: METHOD` HTTP header into request |
-| `extension_api`          | `string` | no       | Use for MainWP extensions REST API prefix,                                                                                                             |
+| `extension_api`          | `string` | no       | Use for MainWP's Extensions API                                                                                                             		  |
 
 ## Client methods
 
@@ -157,7 +157,7 @@ try {
   // Array of response results.
   $results = $mainwp->get('sites');
   echo '<pre><code>' . print_r($results, true) . '</code><pre>'; // JSON output.
-
+  // Example: [ 'success' => 1, 'total' => 10, 'data' => [...]]
   // Last request data.
   $lastRequest = $mainwp->http->getRequest();
   echo '<pre><code>' . print_r($lastRequest->getUrl(), true) . '</code><pre>'; // Requested URL (string).

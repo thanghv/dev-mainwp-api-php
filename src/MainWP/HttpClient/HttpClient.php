@@ -131,7 +131,7 @@ class HttpClient {
 	 * @return string
 	 */
 	protected function buildApiUrl( $url ) {
-		$api = $this->options->apiPrefix() . '/mainwp/';
+		$api = $this->options->apiPrefix() . 'mainwp/';
 		return \rtrim( $url, '/' ) . $api . $this->options->getVersion() . '/' . $this->options->apiForExtension();
 	}
 
@@ -168,7 +168,7 @@ class HttpClient {
 		// Setup authentication.
 		if ( 'bearer' === $this->options->getAuthMethod() ) {
 			return $parameters;
-		} elseif ( 'basic' === $this->options->isOAuthOnly() && $this->isSsl() ) {
+		} elseif ( 'basic' === $this->options->getAuthMethod() && $this->isSsl() ) {
 			$basicAuth  = new BasicAuth(
 				$this->ch,
 				$this->consumerKey,
@@ -237,13 +237,14 @@ class HttpClient {
 	 * @return Request
 	 */
 	protected function createRequest( $endpoint, $method, $data = array(), $parameters = array() ) {
-		$body    = '';
-		$url     = $this->url . $endpoint;
-		$hasData = ! empty( $data );
-		$headers = $this->getRequestHeaders( $hasData );
+		$body     = '';
+		$endpoint = ltrim( $endpoint, '/' );
+		$url      = $this->url . $endpoint;
+		$hasData  = ! empty( $data );
+		$headers  = $this->getRequestHeaders( $hasData );
 
 		if ( 'bearer' === $this->options->getAuthMethod() ) {
-			$headers['Authorization'] = 'Bearer ' . $this->options->consumerApiKey;
+			$headers['Authorization'] = 'Bearer ' . $this->consumerApiKey;
 		}
 
 		// HTTP method override feature which masks PUT and DELETE HTTP methods as POST method with added

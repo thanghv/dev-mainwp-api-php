@@ -21,7 +21,7 @@ class Client {
 	/**
 	 * MainWP REST API Client version.
 	 */
-	public const VERSION = '5.0.0';
+	public const VERSION = '1.0.0';
 
 	/**
 	 * HttpClient instance.
@@ -49,7 +49,7 @@ class Client {
 	 *
 	 * @return \stdClass
 	 */
-	public function post( $endpoint, $data ) {
+	public function post( $endpoint, $data = array() ) {
 		return $this->http->request( $endpoint, 'POST', $data );
 	}
 
@@ -61,7 +61,7 @@ class Client {
 	 *
 	 * @return \stdClass
 	 */
-	public function put( $endpoint, $data ) {
+	public function put( $endpoint, $data = array() ) {
 		return $this->http->request( $endpoint, 'PUT', $data );
 	}
 

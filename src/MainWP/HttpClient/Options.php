@@ -26,7 +26,7 @@ class Options {
 	/**
 	 * Default request timeout.
 	 */
-	public const TIMEOUT = 15;
+	public const TIMEOUT = 30;
 
 	/**
 	 * Default WP API prefix.
@@ -77,7 +77,7 @@ class Options {
 	/**
 	 * Get auth method.
 	 *
-	 * @return string
+	 * @return string bearer|oauth|basic.
 	 */
 	public function getAuthMethod() {
 		if ( ! empty( $this->options['auth_method'] ) && in_array( $this->options['auth_method'], array( 'oauth', 'basic' ) ) ) {
