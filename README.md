@@ -1,6 +1,6 @@
 # MainWP API - PHP Client
 
-A PHP wrapper for the MainWP REST API. Easily interact with the MainWP REST API securely using this library. If using a HTTPS connection this library uses BasicAuth, else it uses Oauth to provide a secure connection to MainWP.
+A PHP wrapper for the MainWP REST API. Easily interact with the MainWP REST API securely using this library. If using a HTTPS connection this library uses BasicAuth, else it uses Bear Token to provide a secure connection to MainWP.
 
 [![CI status](https://github.com/thanghv/dev-mainwp-api-php/actions/workflows/ci.yml/badge.svg?branch=trunk)](https://github.com/thanghv/dev-mainwp-api-php/actions/workflows/ci.yml)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thanghv/dev-mainwp-api-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/thanghv/dev-mainwp-api-php/?branch=master)
@@ -96,12 +96,11 @@ $mainwp = new Client($url, $options );
 | `version`                | `string` | no       | API version, default is `v2`                                                                                                                           |
 | `timeout`                | `int`    | no       | Request timeout, default is `15`                                                                                                                       |
 | `verify_ssl`             | `bool`   | no       | Verify SSL when connect, use this option as `false` when need to test with self-signed certificates, default is `true`                                 |
-| `auth_method`            | `string  | no       | Use Bearer Token `bearer`, oAuth `oauth`, or Basic 'basic' auth for requests, default is `bearer`                                                      |                    |
+| `auth_method`            | `string  | no       | Use Bearer Token `bearer` or Basic 'basic' auth for requests, default is `bearer`                                                      |                    |
 | `consumer_key`    	   | `string` | no    	 | Your API consumer key                      																											  |
 | `consumer_secret` 	   | `string` | no   	 | Your API consumer secret                   																											  |
 | `follow_redirects`       | `bool`   | no       | Allow the API call to follow redirects                                                                                                                 |
 | `query_string_auth`      | `bool`   | no       | Force Basic Authentication as query string when `true` and using under HTTPS, default is `false`                                                       |
-| `oauth_timestamp`        | `string` | no       | Custom oAuth timestamp, default is `time()`                                                                                                            |
 | `user_agent`             | `string` | no       | Custom user-agent, default is `MainWP API Client-PHP`                                                                                                  |
 | `method_override_header` | `bool`   | no       | If true will mask all non-GET/POST methods (PUT/DELETE/etc.) by using POST method with added `X-HTTP-Method-Override: METHOD` HTTP header into request |
 | `extension_api`          | `string` | no       | Use for MainWP's Extensions API                                                                                                             		  |

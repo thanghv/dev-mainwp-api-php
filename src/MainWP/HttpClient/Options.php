@@ -77,10 +77,10 @@ class Options {
 	/**
 	 * Get auth method.
 	 *
-	 * @return string bearer|oauth|basic.
+	 * @return string bearer|basic.
 	 */
 	public function getAuthMethod() {
-		if ( ! empty( $this->options['auth_method'] ) && in_array( $this->options['auth_method'], array( 'oauth', 'basic' ) ) ) {
+		if ( ! empty( $this->options['auth_method'] ) && in_array( $this->options['auth_method'], array( 'basic' ) ) ) {
 			return $this->options['auth_method'];
 		}
 		return 'bearer';
@@ -126,15 +126,6 @@ class Options {
 			return $ext_api . '/';
 		}
 		return '';
-	}
-
-	/**
-	 * oAuth timestamp.
-	 *
-	 * @return string
-	 */
-	public function oauthTimestamp() {
-		return isset( $this->options['oauth_timestamp'] ) ? $this->options['oauth_timestamp'] : \time();
 	}
 
 	/**

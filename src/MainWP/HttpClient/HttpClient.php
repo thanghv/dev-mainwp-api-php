@@ -12,7 +12,6 @@ namespace MainWP\Dashboard\HttpClient;
 use MainWP\Dashboard\Client;
 use MainWP\Dashboard\HttpClient\BasicAuth;
 use MainWP\Dashboard\HttpClient\HttpClientException;
-use MainWP\Dashboard\HttpClient\OAuth;
 use MainWP\Dashboard\HttpClient\Options;
 use MainWP\Dashboard\HttpClient\Request;
 use MainWP\Dashboard\HttpClient\Response;
@@ -158,13 +157,11 @@ class HttpClient {
 	/**
 	 * Authenticate.
 	 *
-	 * @param string $url        Request URL.
-	 * @param string $method     Request method.
 	 * @param array  $parameters Request parameters.
 	 *
 	 * @return array
 	 */
-	protected function authenticate( $url, $method, $parameters = array() ) {
+	protected function authenticate( $parameters = array() ) {
 		// Setup authentication.
 		if ( 'bearer' === $this->options->getAuthMethod() ) {
 			return $parameters;
@@ -177,17 +174,6 @@ class HttpClient {
 				$parameters
 			);
 			$parameters = $basicAuth->getParameters();
-		} else {
-			$oAuth      = new OAuth(
-				$url,
-				$this->consumerKey,
-				$this->consumerSecret,
-				$this->options->getVersion(),
-				$method,
-				$parameters,
-				$this->options->oauthTimestamp()
-			);
-			$parameters = $oAuth->getParameters();
 		}
 
 		return $parameters;
@@ -261,7 +247,7 @@ class HttpClient {
 		}
 
 		// Setup authentication.
-		$parameters = $this->authenticate( $url, $method, $parameters );
+		$parameters = $this->authenticate($parameters );
 
 		// Setup method.
 		$this->setupMethod( $method );
